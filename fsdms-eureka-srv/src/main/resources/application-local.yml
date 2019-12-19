@@ -1,0 +1,13 @@
+eureka:
+  environment: LOCAL-ENV # change Environment value in the eureka homepage
+  datacenter: LOCAL-DC # change Data center value in the eureka homepage
+  server:
+    enable-self-preservation: false
+    eviction-interval-timer-in-ms: 3000
+  client:
+    register-with-eureka: false # don't add itselfe into eureka
+    fetch-registry: false # single eureka server, so don't need sync/fetch data from other eureka server
+    service-url:
+      defaultZone: http://127.0.0.1:8761/eureka/
+    healthcheck:
+      enabled: true

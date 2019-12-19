@@ -1,0 +1,13 @@
+eureka:
+  environment: DOCKER-ENV # change Environment value in the eureka homepage
+  datacenter: DOCKER-DC # change Data center value in the eureka homepage
+  server:
+    enable-self-preservation: false
+    eviction-interval-timer-in-ms: 3000
+  client:
+    register-with-eureka: false # don't add itselfe into eureka
+    fetch-registry: false # single eureka server, so don't need sync/fetch data from other eureka server
+    service-url:
+      defaultZone: http://fsdms-eureka-ctn:8761/eureka/ # fsdms-eureka-ctn - it's docker container name for eureka server.
+    healthcheck:
+      enabled: true

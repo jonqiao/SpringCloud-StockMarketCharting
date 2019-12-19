@@ -1,0 +1,43 @@
+spring:
+  profiles:
+    active: local  # yml: local, stage
+  application:
+    name: fsdms-zuul-srv
+
+server:
+  port: 9049
+  http2:
+    enabled: true
+
+zuul:
+  # 所谓敏感，也即是在转发时要删除的设置
+  sensitive-headers: Access-Control-Allow-Origin,Cookie,Set-Cookie # 会过滤客户端附带的headers. It's to fix error: multiple Access-Control-Allow-Origin
+  ignored-headers: Access-Control-Allow-Origin,Cookie,Set-Cookie # 会过滤服务之间通信附带的headers, e.g.: 如果客户端在发请求是带了Cookie，那么Cookie依然会传递给下游服务。但是如果下游服务再转发就会被过滤。
+  prefix: /fsdms/api/v1
+  strip-prefix: false
+  routes:
+    fsdms-security-srv: /scs/**
+    fsdms-upload-srv: /upl/**
+    fsdms-company-srv: /com/**
+    fsdms-sector-srv: /sct/**
+    fsdms-exchange-srv: /exc/** # e.g.: /fsdms/api/v1/exc/exchange/all or /fsdms/api/v1/fsdms-exchange-srv/exchange/all
+
+ribbon:
+  ConnectTimeout: 60000
+  ReadTimeout: 60000
+
+management:
+  endpoints:
+    enabled-by-default: false
+  endpoint:
+    info:
+      enabled: true
+    health:
+      enabled: true
+      show-details: always
+
+swagger:
+  enabled: true
+
+logging:
+  config: classpath:logback-spring.xml

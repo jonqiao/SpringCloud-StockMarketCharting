@@ -1,0 +1,11 @@
+spring:
+  profiles:
+    active: local  # yml: local, stage
+  application:
+    name: fsdms-eureka-srv
+
+server:
+  port: 8761
+
+logging:
+  config: classpath:logback-spring.xml

@@ -1,0 +1,12 @@
+eureka:
+  client:
+    service-url:
+      defaultZone: http://fsdms-eureka-ctn:8761/eureka/  # fsdms-eureka-ctn - it's docker container name for eureka server.
+    healthcheck:
+      enabled: true
+  instance:
+    #    prefer-ip-address: false
+    #    hostname: localhost
+    #    instance-id: 127.0.0.1:${server.port}
+    lease-expiration-duration-in-seconds: 30
+    lease-renewal-interval-in-seconds: 10
