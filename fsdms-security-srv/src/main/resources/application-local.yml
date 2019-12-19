@@ -3,8 +3,8 @@ spring:
     maillink: http://127.0.0.1:9054/fsdms/api/v1/user/active/
     host: smtp.qq.com
     port: 465 # mailSenderServer：smtp.qq.com，use SSL，prot 465 or 587
-    username: 31687856@qq.com
-    password: ctxezepsragcbjff   # token generated from mail.qq.com
+    username: xxxxxxxx@qq.com
+    password: xxxxxxxxxx   # token generated from mail.qq.com
     properties:
       mail:
         smtp:

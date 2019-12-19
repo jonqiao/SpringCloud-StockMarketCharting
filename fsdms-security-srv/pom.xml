@@ -22,10 +22,6 @@
     <springfox-swagger2.version>2.9.2</springfox-swagger2.version>
     <springfox-swagger-ui.version>2.9.2</springfox-swagger-ui.version>
     <!--    <swagger-bootstrap-ui.version>1.9.6</swagger-bootstrap-ui.version>-->
-    <!--docker private registry repository-->
-    <!--    <docker.registry>127.0.0.1:5000</docker.registry>-->
-    <dockerfile.maven.version>1.4.13</dockerfile.maven.version>
-    <docker.username>dlqiaoxy</docker.username>
   </properties>
 
   <dependencies>

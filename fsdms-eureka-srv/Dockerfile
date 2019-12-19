@@ -1,5 +1,5 @@
 FROM openjdk:8
-MAINTAINER Jon <dlqiaoxy@cn.ibm.com>
+MAINTAINER Jon Q
 WORKDIR /fsdms
 VOLUME /fsdms-data
 ENV PROJECT_ARTIFACTID="fsdms-eureka-srv" PROJECT_VERSION="0.0.1-SNAPSHOT"

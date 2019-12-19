@@ -1,5 +1,8 @@
 pipeline {
   agent none
+  environment {
+    DOCKHUB_USERNAME = 'xxxxxxxx'
+  }
   stages {
     stage('maven Build src') {
       agent {
@@ -19,29 +22,29 @@ pipeline {
       steps {
         // docker rmi old images before build: remove only there are images found
         script {
-          def REMOVE_FLAG = sh(returnStdout: true, script: "docker image ls -q *dlqiaoxy/fsdms-eureka-srv*") != ""
+          def REMOVE_FLAG = sh(returnStdout: true, script: "docker image ls -q *${DOCKHUB_USERNAME}/fsdms-eureka-srv*") != ""
           echo "REMOVE_FLAG: ${REMOVE_FLAG}"
           if(REMOVE_FLAG){
-            // sh 'docker image ls --format {{.ID}} *dlqiaoxy/fsdms-eureka-srv* | xargs docker image rm -f'
-            // sh 'docker image rm -f $(docker image ls --format {{.ID}} *dlqiaoxy/fsdms-eureka-srv*)'
-            sh 'docker image rm -f $(docker image ls -q *dlqiaoxy/fsdms-eureka-srv*)'
+            // sh 'docker image ls --format {{.ID}} *${DOCKHUB_USERNAME}/fsdms-eureka-srv* | xargs docker image rm -f'
+            // sh 'docker image rm -f $(docker image ls --format {{.ID}} *${DOCKHUB_USERNAME}/fsdms-eureka-srv*)'
+            sh 'docker image rm -f $(docker image ls -q *${DOCKHUB_USERNAME}/fsdms-eureka-srv*)'
           }
         }
 
         // solution 1: can login successfully, but id/pw will be exposed
         // script {
           // docker.withRegistry(registry-server, Credentials_ID)
-          // docker.withRegistry('https://index.docker.io/v1/', 'DockerHub_dlqiaoxy') {
-          //   def customImage = docker.build("dlqiaoxy/fsdms-eureka-srv:latest", '-f Dockerfile .')
+          // docker.withRegistry('https://index.docker.io/v1/', 'DockerHub_${DOCKHUB_USERNAME}') {
+          //   def customImage = docker.build("${DOCKHUB_USERNAME}/fsdms-eureka-srv:latest", '-f Dockerfile .')
           //   /* Push the image to the docker hub Registry */
           //   customImage.push('latest')
           // }
         // }
         // soution 2: it's good to use without any expose..
-        withCredentials([usernamePassword(credentialsId: 'DockerHub_dlqiaoxy', usernameVariable: 'USERNAME', passwordVariable: 'PASSWORD')]) {
+        withCredentials([usernamePassword(credentialsId: 'DockerHub_${DOCKHUB_USERNAME}', usernameVariable: 'USERNAME', passwordVariable: 'PASSWORD')]) {
           sh 'docker login -u $USERNAME -p $PASSWORD'
-          sh 'docker image build -t dlqiaoxy/fsdms-eureka-srv:latest .'
-          sh 'docker push dlqiaoxy/fsdms-eureka-srv:latest'
+          sh 'docker image build -t ${DOCKHUB_USERNAME}/fsdms-eureka-srv:latest .'
+          sh 'docker push ${DOCKHUB_USERNAME}/fsdms-eureka-srv:latest'
         }
       }
     }
@@ -64,20 +67,20 @@ pipeline {
 
         // docker rmi old images: remove only there are images found
         script {
-          def REMOVE_FLAG = sh(returnStdout: true, script: "docker image ls -q *dlqiaoxy/fsdms-eureka-srv*") != ""
+          def REMOVE_FLAG = sh(returnStdout: true, script: "docker image ls -q *${DOCKHUB_USERNAME}/fsdms-eureka-srv*") != ""
           echo "REMOVE_FLAG: ${REMOVE_FLAG}"
           if(REMOVE_FLAG){
-            // sh 'docker image ls --format {{.ID}} *dlqiaoxy/fsdms-eureka-srv* | xargs docker image rm -f'
-            // sh 'docker image rm -f $(docker image ls --format {{.ID}} *dlqiaoxy/fsdms-eureka-srv*)'
-            sh 'docker image rm -f $(docker image ls -q *dlqiaoxy/fsdms-eureka-srv*)'
+            // sh 'docker image ls --format {{.ID}} *${DOCKHUB_USERNAME}/fsdms-eureka-srv* | xargs docker image rm -f'
+            // sh 'docker image rm -f $(docker image ls --format {{.ID}} *${DOCKHUB_USERNAME}/fsdms-eureka-srv*)'
+            sh 'docker image rm -f $(docker image ls -q *${DOCKHUB_USERNAME}/fsdms-eureka-srv*)'
           }
         }
 
         // docker pull image from docker hub registry
-        sh 'docker pull dlqiaoxy/fsdms-eureka-srv'
+        sh 'docker pull ${DOCKHUB_USERNAME}/fsdms-eureka-srv'
 
         // docker run images
-        sh 'docker run -d -p 8761:8761 -v fsdms-data:/fsdms-data --network fsdms-net --name fsdms-eureka-ctn dlqiaoxy/fsdms-eureka-srv'
+        sh 'docker run -d -p 8761:8761 -v fsdms-data:/fsdms-data --network fsdms-net --name fsdms-eureka-ctn ${DOCKHUB_USERNAME}/fsdms-eureka-srv'
       }
     }
 

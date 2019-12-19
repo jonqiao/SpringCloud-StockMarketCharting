@@ -19,10 +19,6 @@
     <project.reporting.outputEncoding>UTF-8</project.reporting.outputEncoding>
     <spring-cloud.version>Greenwich.SR3</spring-cloud.version>
     <java.version>1.8</java.version>
-    <!--docker private registry repository-->
-    <!--    <docker.registry>127.0.0.1:5000</docker.registry>-->
-    <dockerfile.maven.version>1.4.13</dockerfile.maven.version>
-    <docker.username>dlqiaoxy</docker.username>
   </properties>
 
   <dependencies>
@@ -30,11 +26,6 @@
       <groupId>org.springframework.cloud</groupId>
       <artifactId>spring-cloud-starter-netflix-eureka-server</artifactId>
     </dependency>
-
-    <!--    <dependency>-->
-    <!--      <groupId>org.springframework.cloud</groupId>-->
-    <!--      <artifactId>spring-cloud-starter-config</artifactId>-->
-    <!--    </dependency>-->
 
     <dependency>
       <groupId>org.springframework.boot</groupId>
@@ -91,32 +82,6 @@
           <skip>true</skip>
         </configuration>
       </plugin>
-      <!--      <plugin>-->
-      <!--        &lt;!&ndash; need to config win10 system env: DOCKER_HOST=tcp://127.0.0.1:2375&ndash;&gt;-->
-      <!--        <groupId>com.spotify</groupId>-->
-      <!--        <artifactId>dockerfile-maven-plugin</artifactId>-->
-      <!--        <version>${dockerfile.maven.version}</version>-->
-      <!--        <executions>-->
-      <!--          <execution>-->
-      <!--            <id>default</id>-->
-      <!--            <goals>-->
-      <!--              &lt;!&ndash;comment out the goal if don't need it&ndash;&gt;-->
-      <!--              <goal>build</goal>-->
-      <!--              <goal>push</goal>-->
-      <!--            </goals>-->
-      <!--          </execution>-->
-      <!--        </executions>-->
-      <!--        <configuration>-->
-      <!--          <username>${docker.username}</username>-->
-      <!--          <password>d25c27fb-458d-44d9-8523-b08e5db959d2</password>-->
-      <!--          <repository>${docker.username}/${project.artifactId}</repository>-->
-      <!--          <tag>latest</tag>-->
-      <!--          <buildArgs>-->
-      <!--            &lt;!&ndash;provide ARG to Dockerfile&ndash;&gt;-->
-      <!--            <JAR_FILE>target/${project.artifactId}-${project.version}.jar</JAR_FILE>-->
-      <!--          </buildArgs>-->
-      <!--        </configuration>-->
-      <!--      </plugin>-->
     </plugins>
   </build>
 
