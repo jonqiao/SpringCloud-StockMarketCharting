@@ -1,0 +1,28 @@
+spring:
+  datasource:
+    driver-class-name: com.mysql.cj.jdbc.Driver # for mysql-connector-java 6&later
+    url: jdbc:mysql://fsdms-mysql-srv:3306/sbadb?useSSL=false&allowPublicKeyRetrieval=true&useUnicode=true&characterEncoding=UTF-8&serverTimezone=EST # fsdms-mysql-srv - it's docker container name for mysql server.
+    username: root
+    password: root123456
+  jpa:
+    show-sql: true
+    hibernate:
+      naming:
+        physical-strategy: com.fsd.config.LowerTableNamingStrategy # In Linux, mysql table name is case-sensitive, therefore use this clase to lower table name
+#        physical-strategy: org.hibernate.boot.model.naming.PhysicalNamingStrategyStandardImpl # Use PhysicalNamingStrategy to let hibernate not use underscore for the table name
+#  jackson:
+#    serialization:
+#      fail-on-empty-beans: false
+
+eureka:
+  client:
+    service-url:
+      defaultZone: http://fsdms-eureka-ctn:8761/eureka/  # fsdms-eureka-ctn - it's docker container name for eureka server.
+    healthcheck:
+      enabled: true
+  instance:
+    #    prefer-ip-address: true
+    #    hostname: localhost
+    #    instance-id: 127.0.0.1:${server.port}
+    lease-expiration-duration-in-seconds: 30
+    lease-renewal-interval-in-seconds: 10

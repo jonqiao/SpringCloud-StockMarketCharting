@@ -1,0 +1,30 @@
+spring:
+  datasource:
+    # driver-class-name: com.mysql.jdbc.Driver # for mysql-connector-java 5
+    driver-class-name: com.mysql.cj.jdbc.Driver # for mysql-connector-java 6&later
+    url: jdbc:mysql://127.0.0.1:3306/sbadb?useSSL=false&allowPublicKeyRetrieval=true&useUnicode=true&characterEncoding=UTF-8
+    #    url: jdbc:mysql://127.0.0.1:3306/fsddb?useSSL=false&allowPublicKeyRetrieval=true&useUnicode=true&characterEncoding=UTF-8&useOldAliasMetadataBehavior=true
+    username: root
+    password: root123456
+  jpa:
+    show-sql: true
+    hibernate:
+      naming:
+        physical-strategy: com.fsd.config.LowerTableNamingStrategy # In Linux, mysql table name is case-sensitive, therefore use this clase to lower table name
+#        physical-strategy: org.hibernate.boot.model.naming.PhysicalNamingStrategyStandardImpl # Use PhysicalNamingStrategy to let hibernate not use underscore for the table name
+#  jackson:
+#    serialization:
+#      fail-on-empty-beans: false
+
+eureka:
+  client:
+    service-url:
+      defaultZone: http://127.0.0.1:8761/eureka/
+    healthcheck:
+      enabled: true
+  instance:
+    #    prefer-ip-address: true
+    #    hostname: localhost
+    #    instance-id: 127.0.0.1:${server.port}
+    lease-expiration-duration-in-seconds: 30
+    lease-renewal-interval-in-seconds: 10

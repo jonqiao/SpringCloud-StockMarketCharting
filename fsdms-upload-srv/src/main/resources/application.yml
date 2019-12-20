@@ -1,0 +1,29 @@
+spring:
+  profiles:
+    active: local  # yml: local, stage
+  application:
+    name: fsdms-upload-srv
+
+server:
+  port: 9050
+  servlet:
+    context-path: /fsdms
+    application-display-name: FSDMS-UPLOAD-SRV
+
+management:
+  endpoints:
+    enabled-by-default: false
+  endpoint:
+    info:
+      enabled: true
+    health:
+      enabled: true
+      show-details: always
+
+swagger:
+  enabled: true
+
+logging:
+  config: classpath:logback-spring.xml
+
+#debug: true
