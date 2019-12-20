@@ -1,0 +1,65 @@
+pipeline {
+  agent none
+  environment {
+    DOCKHUB_USERNAME = 'xxxxxxxx'
+  }
+  stages {
+    stage('maven Build src') {
+      agent {
+        docker {
+          image 'maven:3-alpine'
+          args '-v /root/.m2:/root/.m2'
+        }
+      }
+      steps {
+      // maven build src to get the jar file in target folder
+        sh 'mvn -B -DskipTests clean package'
+      }
+    }
+
+    stage('docker build & push image on build docker/build server') {
+      agent any
+      steps {
+        // docker stop/rm older containers: remove only there are containers found
+        script {
+          def REMOVE_FLAG = sh(returnStdout: true, script: "docker container ls -q --filter name=.*fsdms-exchange-ctn.*") != ""
+          echo "REMOVE_FLAG: ${REMOVE_FLAG}"
+          if(REMOVE_FLAG){
+            sh 'docker container rm -f $(docker container ls -q --filter name=.*fsdms-exchange-srv.*)'
+          }
+        }
+
+        // docker rmi old images before build: remove only there are images found
+        script {
+          def REMOVE_FLAG = sh(returnStdout: true, script: "docker image ls -q *${DOCKHUB_USERNAME}/fsdms-exchange-srv*") != ""
+          echo "REMOVE_FLAG: ${REMOVE_FLAG}"
+          if(REMOVE_FLAG){
+            sh 'docker image rm -f $(docker image ls -q *${DOCKHUB_USERNAME}/fsdms-exchange-srv*)'
+          }
+        }
+
+        withCredentials([usernamePassword(credentialsId: 'DockerHub_${DOCKHUB_USERNAME}', usernameVariable: 'USERNAME', passwordVariable: 'PASSWORD')]) {
+          // sh 'docker login -u $USERNAME -p $PASSWORD'
+          sh 'docker image build -t ${DOCKHUB_USERNAME}/fsdms-exchange-srv:latest .'
+          // sh 'docker push ${DOCKHUB_USERNAME}/fsdms-exchange-srv:latest'
+        }
+      }
+    }
+
+    stage('docker run images on docker/deploy server') {
+      agent any
+      steps {
+        // docker run images
+        sh 'docker run -d -p 9051:9051 -v fsdms-data:/fsdms-data --network fsdms-net --name fsdms-exchange-ctn ${DOCKHUB_USERNAME}/fsdms-exchange-srv'
+      }
+    }
+
+    stage('clean workspace') {
+      agent any
+      steps {
+        // clean workspace after job finished
+        cleanWs()
+      }
+    }
+  }
+}
