@@ -1,0 +1,29 @@
+spring:
+  profiles:
+    active: local  # yml: local, stage
+  application:
+    name: fsdms-sector-srv
+
+server:
+  port: 9053
+  servlet:
+    context-path: /fsdms
+    application-display-name: FSDMS-SECTOR-SRV
+
+management:
+  endpoints:
+    enabled-by-default: false
+  endpoint:
+    info:
+      enabled: true
+    health:
+      enabled: true
+      show-details: always
+
+swagger:
+  enabled: true
+
+logging:
+  config: classpath:logback-spring.xml
+
+#debug: true
