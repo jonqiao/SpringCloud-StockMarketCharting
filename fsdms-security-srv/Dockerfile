@@ -1,5 +1,5 @@
-FROM openjdk:8
-MAINTAINER Jon Q
+FROM openjdk:8u232-jre-slim
+LABEL maintainer Jon Q
 WORKDIR /fsdms
 VOLUME /fsdms-data
 ENV PROJECT_ARTIFACTID="fsdms-security-srv" PROJECT_VERSION="0.0.1-SNAPSHOT"
