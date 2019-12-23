@@ -22,10 +22,10 @@ pipeline {
       steps {
         // docker stop/rm older containers: remove only there are containers found
         script {
-          def REMOVE_FLAG = sh(returnStdout: true, script: "docker container ls -q --filter name=.*fsdms-zuul-ctn.*") != ""
+          def REMOVE_FLAG = sh(returnStdout: true, script: "docker container ls -aq --filter name=.*fsdms-zuul-ctn.*") != ""
           echo "REMOVE_FLAG: ${REMOVE_FLAG}"
           if(REMOVE_FLAG){
-            sh 'docker container rm -f $(docker container ls -q --filter name=.*fsdms-zuul-srv.*)'
+            sh 'docker container rm -f $(docker container ls -aq --filter name=.*fsdms-zuul-ctn.*)'
           }
         }
 
@@ -38,7 +38,7 @@ pipeline {
           }
         }
 
-        withCredentials([usernamePassword(credentialsId: 'DockerHub_${DOCKHUB_USERNAME}', usernameVariable: 'USERNAME', passwordVariable: 'PASSWORD')]) {
+        withCredentials([usernamePassword(credentialsId: "DockerHub_${DOCKHUB_USERNAME}", usernameVariable: 'USERNAME', passwordVariable: 'PASSWORD')]) {
           // sh 'docker login -u $USERNAME -p $PASSWORD'
           sh 'docker image build -t ${DOCKHUB_USERNAME}/fsdms-zuul-srv:latest .'
           // sh 'docker push ${DOCKHUB_USERNAME}/fsdms-zuul-srv:latest'
