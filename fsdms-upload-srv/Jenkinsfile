@@ -50,7 +50,7 @@ pipeline {
       agent any
       steps {
         // docker run images
-        sh 'docker run -d -p 9051:9051 -v fsdms-data:/fsdms-data --network fsdms-net --name fsdms-upload-ctn ${DOCKHUB_USERNAME}/fsdms-upload-srv'
+        sh 'docker run -d -p 9050:9050 -v fsdms-data:/fsdms-data --network fsdms-net --name fsdms-upload-ctn ${DOCKHUB_USERNAME}/fsdms-upload-srv'
       }
     }
 
