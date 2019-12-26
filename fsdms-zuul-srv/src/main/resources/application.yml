@@ -6,8 +6,6 @@ spring:
 
 server:
   port: 9049
-  http2:
-    enabled: true
 
 zuul:
   # 所谓敏感，也即是在转发时要删除的设置

@@ -1,5 +1,5 @@
 FROM node as node-builder
-MAINTAINER Jon <dlqiaoxy@cn.ibm.com>
+LABEL maintainer Jon Q
 WORKDIR /fsdms
 COPY . .
 RUN npm install
