@@ -1,0 +1,100 @@
+<!-- <div class="row align-items-center justify-content-center">
+  <h2><strong>COMPANY COMPARE</strong></h2>
+</div>
+<hr> -->
+<form class="needs-validation" [formGroup]="compareForm" (ngSubmit)="onSubmit()">
+  <div class="form-row">
+    <div class="col">
+      <label for="comparecategory">Compare Category</label>
+      <select class="form-control" id="comparecategory" formControlName="compareCategory" required>
+        <option selected disabled value="">Choose...</option>
+        <option>COMPANY</option>
+        <option>SECTOR</option>
+      </select>
+      <div [hidden]="compareCategory.valid || compareCategory.untouched">
+        <small *ngIf="compareCategory.invalid" class="form-text text-muted" align="right">Compare Category is required.</small>
+      </div>
+    </div>
+    <div class="col">
+      <label for="stockexchange">Stock Exchange</label>
+      <select class="form-control" id="stockexchange" formControlName="stockExchange" [compareWith]="compareFn" required>
+        <option selected disabled value="">Choose...</option>
+        <option>BSE</option>
+        <option>NSE</option>
+      </select>
+      <div [hidden]="stockExchange.valid || stockExchange.untouched">
+        <small *ngIf="stockExchange.invalid" class="form-text text-muted" align="right">Stock Exchange is required.</small>
+      </div>
+    </div>
+  </div>
+  <div class="form-row" hidden>
+    <div class="col">
+      <label for="companystockcode">Company Stock Code</label>
+      <input type="text" class="form-control" id="companystockcode" formControlName="companyStockCode" required>
+    </div>
+    <div class="col">
+      <label for="sectorname">Sector Name</label>
+      <input type="text" class="form-control" id="sectorname" formControlName="sectorName" required>
+    </div>
+  </div>
+  <div class="form-row">
+    <div class="col-6">
+      <label for="companyname">Company Name</label>
+      <input type="text" class="form-control" id="companyname" formControlName="companyName" (keyup)="debounceSearch($event.target.value)" required>
+      <div [hidden]="companyName.valid || companyName.untouched">
+        <small *ngIf="companyName.invalid" class="form-text text-muted" align="right">Company Name is required.</small>
+      </div>
+    </div>
+    <div class="col-3">
+      <label for="fromperiod">From Period</label>
+      <input type="datetime-local" id="fromperiod" formControlName="fromPeriod" />
+      <div [hidden]="fromPeriod.valid || fromPeriod.untouched">
+        <small *ngIf="fromPeriod.invalid" class="form-text text-muted" align="right">From Period is required.</small>
+      </div>
+    </div>
+    <div class="col-3">
+      <label for="toperiod">To Period</label>
+      <input type="datetime-local" id="toperiod" formControlName="toPeriod" />
+      <div [hidden]="toPeriod.valid || toPeriod.untouched">
+        <small *ngIf="toPeriod.invalid" class="form-text text-muted" align="right">To Period is required.</small>
+      </div>
+    </div>
+  </div>
+  <!-- <div class="form-row" [hidden]="!debounceResults">
+    <div class="col-12">
+      <label for="toperiod">PLEASE CHOOSE COMPANY HERE..</label>
+      <select class="form-control" id="debounceres" [(ngModel)]="debounceRes" (ngModelChange)="debounceSelectChange()">
+        <option selected disabled value="">Choose Company Here...</option>
+        <ng-container *ngFor="let res of debounceResults">
+          <option [ngValue]="res">sectorName: {{ res.sectorName }} - stockExchange: {{ res.stockExchange }} - StockCode: {{ res.companyStockCode }} - companyName: {{ res.companyName }}</option>
+        </ng-container>
+      </select>
+    </div>
+  </div> -->
+  <div class="form-row" [hidden]="!debounceResults">
+    <div class="col-12">
+      <label for="toperiod">PLEASE CHOOSE COMPANY HERE..</label>
+      <select class="form-control" id="debounceres" formControlName="debounceRes" (ngModelChange)="debounceSelectChange()">
+        <option selected disabled value="">PLEASE CHOOSE COMPANY HERE...</option>
+        <ng-container *ngFor="let res of debounceResults">
+          <option [ngValue]="res">sectorName: {{ res.sectorName }} - stockExchange: {{ res.stockExchange }} - StockCode: {{ res.companyStockCode }} - companyName: {{ res.companyName }}</option>
+        </ng-container>
+      </select>
+      <div>&nbsp;</div>
+    </div>
+  </div>
+  <div class="form-row">
+    <div class="col">
+      <button class="btn btn-primary btn-block" type="submit" [disabled]="!compareForm.valid">
+        Submit
+      </button>
+    </div>
+    <div class="col">
+      <button class="btn btn-primary btn-block" type="reset">Reset</button>
+    </div>
+  </div>
+</form>
+<hr>
+
+<!-- <app-generate-chart [inputName]="compareName"></app-generate-chart> -->
+<app-generate-chart [inputData]="consolData"></app-generate-chart>

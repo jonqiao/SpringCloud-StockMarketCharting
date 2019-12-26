@@ -1,0 +1,71 @@
+<div class="row align-items-center justify-content-center">
+  <h2><strong>SECTOR MANAGEMENT</strong></h2>
+</div>
+
+<div id="toolbar" class="btn-group">
+  <button type="button" class="btn btn-primary" data-toggle="modal" data-target="#exchangeModal" (click)="sctModalNewOpen()">
+    <i class="far fa-plus-square"></i>
+  </button>
+  <button type="button" class="btn btn-success" data-toggle="modal" data-target="#exchangeModal" [disabled]="!updateFlag" (click)="sctModalUptOpen()">
+    <i class="far fa-edit"></i>
+  </button>
+  <button type="button" class="btn btn-warning" (click)="refreshTable()"><i class="fas fa-retweet"></i></button>
+</div>
+<table id="sectorTable" class="table table-striped table-hover" data-toggle="table" data-toolbar="#toolbar" data-pagination="true" data-search="true"
+       data-visible-search="true" data-show-search-clear-button="true" data-show-toggle="true" data-click-to-select="true" data-single-select="true"
+       data-show-fullscreen="true" data-page-list="[10, 25, 50, 100, all]" (click)="clickEvent()">
+  <thead>
+    <tr>
+      <th data-field="state" data-checkbox="true"></th>
+      <th data-field="sectorName" data-halign="center" data-sortable="true">Sector Name</th>
+      <th data-field="brief" data-halign="center" data-sortable="true">Brief</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr *ngFor="let sct of sectorArr">
+      <td></td>
+      <td>{{ sct.sectorName }}</td>
+      <td>{{ sct.brief }}</td>
+    </tr>
+  </tbody>
+</table>
+
+<!-- Modal for exchangeModal-->
+<div class="modal fade" id="exchangeModal" tabindex="-1" role="dialog" aria-labelledby="exchangeModalLabel" aria-hidden="true">
+  <div class="modal-dialog" role="document">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title" *ngIf="!updateFlag" id="exchangeModalLabel">CREATE NEW SECTOR</h5>
+        <h5 class="modal-title" *ngIf="updateFlag" id="exchangeModalLabel">UPDATE SECTOR</h5>
+        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+          <span aria-hidden="true">&times;</span>
+        </button>
+      </div>
+      <div class="modal-body">
+        <form class="needs-validation" [formGroup]="sectorForm" (ngSubmit)="onSubmit()">
+          <div class="form-group">
+            <label for="sectorname">sectorName</label>
+            <input type="text" class="form-control" id="sectorname" formControlName="sectorName" placeholder="Sector Name" required />
+            <div [hidden]="sectorName.valid || sectorName.untouched">
+              <div *ngIf="sectorName.invalid" class="alert alert-danger">
+                Sector Name is required.
+              </div>
+            </div>
+          </div>
+          <div class="form-group">
+            <label for="brief">Brief</label>
+            <input type="text" class="form-control" id="brief" formControlName="brief" placeholder="Brief" required />
+            <div [hidden]="brief.valid || brief.untouched">
+              <div *ngIf="brief.invalid" class="alert alert-danger">
+                Brief is required.
+              </div>
+            </div>
+          </div>
+          <br>
+          <button class="btn btn-primary btn-lg btn-block" type="submit" [disabled]="!sectorForm.valid">Submit</button>
+          <button class="btn btn-primary btn-lg btn-block" type="reset">Reset</button>
+        </form>
+      </div>
+    </div>
+  </div>
+</div>

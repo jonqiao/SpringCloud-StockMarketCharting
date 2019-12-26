@@ -1,0 +1,81 @@
+<!-- <a [routerLink]="['/']">
+  <h1>FSD</h1>
+</a> -->
+
+<!-- <a [routerLink]="['/cart']" class="cart-button fancy-cart-button"><i class="fas fa-cart-plus"></i>Checkout</a> -->
+
+<nav class="navbar navbar-expand-lg navbar-light bg-light">
+  <a class="navbar-brand" href="#">Navbar</a>
+  <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent"
+          aria-expanded="false" aria-label="Toggle navigation">
+    <span class="navbar-toggler-icon"></span>
+  </button>
+
+  <div class="collapse navbar-collapse" id="navbarSupportedContent">
+    <ul class="navbar-nav mr-auto">
+      <!-- <li class="nav-item active">
+        <a class="nav-link" href="#">Home <span class="sr-only">(current)</span></a>
+      </li> -->
+
+      <ng-container *ngIf="chkRole('admin')">
+        <li class="nav-item">
+          <a class="nav-link" href="/admin/upload">ImportStock</a>
+          <!-- <a class="nav-link" routerLink="/admin/upload" routerLinkActive="active" [routerLinkActiveOptions]="{ exact: true }">ImportStock</a> -->
+        </li>
+        <li class="nav-item">
+          <!-- when use routerLink, it can not trigger bootstrapTable, not sure why... -->
+          <a class="nav-link" href="/admin/company">ManageCompany</a>
+          <!-- <a class="nav-link" routerLink="/admin/company" routerLinkActive="active" [routerLinkActiveOptions]="{ exact: true }">ManageCompany</a> -->
+        </li>
+        <li class="nav-item">
+          <a class="nav-link" href="/admin/stock-exchange">ManageStockExchange</a>
+          <!-- <a class="nav-link" routerLink="/admin/stock-exchange" routerLinkActive="active" [routerLinkActiveOptions]="{ exact: true }">ManageExchange</a> -->
+        </li>
+        <li class="nav-item">
+          <a class="nav-link" href="/admin/sector">ManageSector</a>
+          <!-- <a class="nav-link" routerLink="/admin/sector" routerLinkActive="active" [routerLinkActiveOptions]="{ exact: true }">ManageSector</a> -->
+        </li>
+        <li class="nav-item">
+          <a class="nav-link" href="/admin/ipo">ManageIPO</a>
+          <!-- <a class="nav-link" routerLink="/admin/ipo" routerLinkActive="active" [routerLinkActiveOptions]="{ exact: true }">ManageIPO</a> -->
+        </li>
+      </ng-container>
+
+      <ng-container *ngIf="chkRole('user')">
+        <li class="nav-item">
+          <a class="nav-link" href="/user/ipo-details">IpoDetails</a>
+        </li>
+        <li class="nav-item">
+          <a class="nav-link" href="/user/company-compare">CompareCompany</a>
+        </li>
+        <li class="nav-item">
+          <a class="nav-link" href="/user/sector-compare">CompareSector</a>
+        </li>
+        <li class="nav-item">
+          <a class="nav-link" href="/user/profile">Profile</a>
+        </li>
+      </ng-container>
+
+      <li class="nav-item dropdown">
+        <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" data-toggle="dropdown" aria-haspopup="true"
+           aria-expanded="false">
+          More
+        </a>
+        <div class="dropdown-menu" aria-labelledby="navbarDropdown">
+          <a class="dropdown-item" routerLink="/403" routerLinkActive="active" [routerLinkActiveOptions]="{ exact: true }">Test-403Page</a>
+          <a class="dropdown-item" routerLink="/pagenotfound" routerLinkActive="active" [routerLinkActiveOptions]="{ exact: true }">Test-404Page</a>
+          <div class="dropdown-divider"></div>
+          <a class="dropdown-item" href="#">Something else</a>
+        </div>
+      </li>
+    </ul>
+
+    <!-- <form class="form-inline"> -->
+    <a class="btn btn-outline-success" [hidden]="isloggedIn()" routerLink="/signin" routerLinkActive="active"
+       [routerLinkActiveOptions]="{ exact: true }">SignIn</a>
+    <a class="btn btn-outline-success" [hidden]="isloggedIn()" routerLink="/signup" routerLinkActive="active"
+       [routerLinkActiveOptions]="{ exact: true }">SignUp</a>
+    <a class="btn btn-outline-success" [hidden]="!isloggedIn()" (click)="signout()">SignOut</a>
+    <!-- </form> -->
+  </div>
+</nav>

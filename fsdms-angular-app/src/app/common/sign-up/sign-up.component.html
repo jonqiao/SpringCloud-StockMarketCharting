@@ -1,0 +1,66 @@
+<div class="row align-items-center justify-content-center">
+  <h2 class="h3 mb-3 font-weight-normal"><strong>WELCOME AND SIGN UP NOW</strong></h2>
+</div>
+
+<form class="needs-validation" [formGroup]="signupForm" (ngSubmit)="onSubmit()">
+  <div class="form-group">
+    <label for="username">User Name</label>
+    <input type="text" class="form-control" id="username" formControlName="username" placeholder="User Name" required />
+    <div [hidden]="username.valid || username.untouched">
+      <div *ngIf="username.invalid" class="alert alert-danger">
+        username is required.
+      </div>
+    </div>
+  </div>
+
+  <div formGroupName="passGroup">
+    <div class="form-group">
+      <label for="password">NEW PASSWORD</label>
+      <input type="password" class="password form-control" id="password" formControlName="password" autocomplete="new-password"
+             placeholder="Password..." required />
+      <div [hidden]="passGroup.valid || password.untouched">
+        <div *ngIf="password.invalid" class="alert alert-danger">
+          Valid password is required.
+        </div>
+      </div>
+    </div>
+
+    <div class="form-group">
+      <label for="reptPassword">REPEAT PASSWORD</label>
+      <input type="password" class="password form-control" id="reptPassword" formControlName="reptPassword" autocomplete="new-password"
+             placeholder="Repeat Password..." required />
+      <div [hidden]="passGroup.valid || reptPassword.untouched">
+        <div *ngIf="reptPassword.invalid" class="alert alert-danger">
+          Valid password is required.
+        </div>
+        <div *ngIf="signupForm.hasError('passSame', 'passGroup')" class="alert alert-danger">
+          Valid password must be same.
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <div class="form-group">
+    <label for="email">E-Mail</label>
+    <input type="email" class="form-control" id="email" formControlName="email" autocomplete="email" placeholder="you@example.com" required />
+    <div [hidden]="email.valid || email.untouched">
+      <div *ngIf="email.invalid" class="alert alert-danger">
+        Valid email is required and must be email format.
+      </div>
+    </div>
+  </div>
+
+  <div class="form-group">
+    <label for="mobile">Mobile</label>
+    <input type="text" class="form-control" id="mobile" formControlName="mobile" placeholder="Mobile" required />
+    <div [hidden]="mobile.valid || mobile.untouched">
+      <div *ngIf="mobile.invalid" class="alert alert-danger">
+        Valid mobile is required and must be 11 length.
+      </div>
+    </div>
+  </div>
+
+  <br>
+  <button class="btn btn-primary btn-lg btn-block" type="submit" [disabled]="!signupForm.valid">Submit</button>
+  <button class="btn btn-primary btn-lg btn-block" type="reset">Reset</button>
+</form>

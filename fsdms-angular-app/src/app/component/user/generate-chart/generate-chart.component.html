@@ -1,0 +1,31 @@
+<div class="medium-right">
+  <highcharts-chart
+    id="hcidjon"
+    [Highcharts]="Highcharts"
+    [constructorType]="chartConstructor"
+    [options]="chartOptions"
+    [callbackFunction]="chartCallback"
+    [(update)]="updateFlag"
+    [oneToOne]="oneToOneFlag"
+    [runOutsideAngular]="runOutsideAngular"
+    style="width: 1000px; height: 400px; display: block;">
+  </highcharts-chart>
+</div>
+<hr>
+<div class="form-row">
+  <div class="col">
+    <button class="btn btn-primary btn-block" type="button" value="newConstValue" (click)="newConstructor()">{{ newConstValue | uppercase }}</button>
+  </div>
+  <div class="col">
+    <button class="btn btn-primary btn-block" type="button" (click)="GenCharts()">GEN-CHARTS</button>
+  </div>
+  <div class="col">
+    <button class="btn btn-primary btn-block" type="button" (click)="RmOneCharts()">RM-CHART</button>
+  </div>
+  <div class="col">
+    <button class="btn btn-primary btn-block" type="button" (click)="RmAllCharts()">RM-CHARTS</button>
+  </div>
+  <div class="col">
+    <button class="btn btn-primary btn-block" type="button" value="switchTypeValue" (click)="switchType()">{{ switchTypeValue | uppercase }}</button>
+  </div>
+</div>

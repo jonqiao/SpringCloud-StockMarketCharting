@@ -1,0 +1,116 @@
+<div class="row align-items-center justify-content-center">
+  <h2><strong>IPO MANAGEMENT</strong></h2>
+</div>
+
+<div id="toolbar" class="btn-group">
+  <button type="button" class="btn btn-primary" data-toggle="modal" data-target="#ipoModal" (click)="ipoModalNewOpen()">
+    <i class="far fa-plus-square"></i>
+  </button>
+  <button type="button" class="btn btn-success" data-toggle="modal" data-target="#ipoModal" [disabled]="!updateFlag" (click)="ipoModalUptOpen()">
+    <i class="far fa-edit"></i>
+  </button>
+  <button type="button" class="btn btn-warning" (click)="refreshTable()"><i class="fas fa-retweet"></i></button>
+</div>
+<table id="ipoTable" class="table table-striped table-hover" data-toggle="table" data-toolbar="#toolbar" data-pagination="true" data-search="true"
+       data-visible-search="true" data-show-search-clear-button="true" data-show-toggle="true" data-click-to-select="true" data-single-select="true"
+       data-show-fullscreen="true" data-page-list="[10, 25, 50, 100, all]" (click)="clickEvent()">
+  <thead>
+    <tr>
+      <th data-field="state" data-checkbox="true"></th>
+      <th data-field="companyName" data-halign="center" data-sortable="true">Company Name</th>
+      <th data-field="stockExchange" data-halign="center" data-sortable="true">Stock Exchange</th>
+      <th data-field="pricePerShare" data-halign="center" data-sortable="true">Price Per Share</th>
+      <th data-field="totalNumberOfShares" data-halign="center" data-sortable="true">Total Number Of Shares</th>
+      <th data-field="openDateTime" data-halign="center" data-sortable="true">Open DateTime</th>
+      <th data-field="remarks" data-halign="center" data-sortable="true">Remarks</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr *ngFor="let ipo of ipoArr">
+      <td></td>
+      <td>{{ ipo.companyName }}</td>
+      <td>{{ ipo.stockExchange }}</td>
+      <td>{{ ipo.pricePerShare | currency: 'USD' }}</td>
+      <td>{{ ipo.totalNumberOfShares | number }}</td>
+      <td>{{ ipo.openDateTime }}</td>
+      <td>{{ ipo.remarks }}</td>
+    </tr>
+  </tbody>
+</table>
+
+<!-- Modal for ipoModal-->
+<div class="modal fade" id="ipoModal" tabindex="-1" role="dialog" aria-labelledby="ipoModalLabel" aria-hidden="true">
+  <div class="modal-dialog" role="document">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title" *ngIf="!updateFlag" id="ipoModalLabel">CREATE NEW IPO</h5>
+        <h5 class="modal-title" *ngIf="updateFlag" id="ipoModalLabel">UPDATE IPO</h5>
+        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+          <span aria-hidden="true">&times;</span>
+        </button>
+      </div>
+      <div class="modal-body">
+        <form class="needs-validation" [formGroup]="ipoForm" (ngSubmit)="onSubmit()">
+          <div class="form-group">
+            <label for="companyname">Company Name</label>
+            <input type="text" class="form-control" id="companyname" formControlName="companyName" placeholder="Company Name" required />
+            <div [hidden]="companyName.valid || companyName.untouched">
+              <div *ngIf="companyName.invalid" class="alert alert-danger">
+                Company Name is required.
+              </div>
+            </div>
+          </div>
+          <div class="form-group">
+            <label for="stockexchange">Stock Exchange</label>
+            <input type="text" class="form-control" id="stockexchange" formControlName="stockExchange" placeholder="Stock Exchange" required />
+            <div [hidden]="stockExchange.valid || stockExchange.untouched">
+              <div *ngIf="stockExchange.invalid" class="alert alert-danger">
+                Stock Exchange is required.
+              </div>
+            </div>
+          </div>
+          <div class="form-group">
+            <label for="pricepershare">Price Per Share</label>
+            <input type="text" class="form-control" id="pricepershare" formControlName="pricePerShare" placeholder="Price Per Share" required />
+            <div [hidden]="pricePerShare.valid || pricePerShare.untouched">
+              <div *ngIf="pricePerShare.invalid" class="alert alert-danger">
+                Price Per Share is required.
+              </div>
+            </div>
+          </div>
+          <div class="form-group">
+            <label for="totalnumberofshares">Total Number Of Shares</label>
+            <input type="text" class="form-control" id="totalnumberofshares" formControlName="totalNumberOfShares"
+                   placeholder="Total Number Of Shares" required />
+            <div [hidden]="totalNumberOfShares.valid || totalNumberOfShares.untouched">
+              <div *ngIf="totalNumberOfShares.invalid" class="alert alert-danger">
+                Total Number Of Shares is required.
+              </div>
+            </div>
+          </div>
+          <div class="form-group">
+            <label for="opendatetime">Open DateTime</label>
+            <input type="text" class="form-control" id="opendatetime" formControlName="openDateTime" placeholder="Open DateTime" required />
+            <div [hidden]="openDateTime.valid || openDateTime.untouched">
+              <div *ngIf="openDateTime.invalid" class="alert alert-danger">
+                Open DateTime is required.
+              </div>
+            </div>
+          </div>
+          <div class="form-group">
+            <label for="remarks">Remarks</label>
+            <input type="text" class="form-control" id="remarks" formControlName="remarks" placeholder="Remarks" required />
+            <div [hidden]="remarks.valid || remarks.untouched">
+              <div *ngIf="remarks.invalid" class="alert alert-danger">
+                Remarks is required.
+              </div>
+            </div>
+          </div>
+          <br>
+          <button class="btn btn-primary btn-lg btn-block" type="submit" [disabled]="!ipoForm.valid">Submit</button>
+          <button class="btn btn-primary btn-lg btn-block" type="reset">Reset</button>
+        </form>
+      </div>
+    </div>
+  </div>
+</div>
