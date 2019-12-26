@@ -6,7 +6,8 @@ RUN npm install
 RUN npm run build
 
 FROM nginx
-MAINTAINER Jon <dlqiaoxy@cn.ibm.com>
+LABEL maintainer Jon Q
 COPY --from=node-builder /fsdms/dist/fsdms-angular-app /usr/share/nginx/html
+COPY ./nginx.conf /etc/nginx/nginx.conf
 COPY ./nginx-angular.conf /etc/nginx/conf.d/default.conf
 EXPOSE 80
