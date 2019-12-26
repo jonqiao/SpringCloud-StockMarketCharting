@@ -64,9 +64,9 @@ public class UserController {
       if (!("".equalsIgnoreCase(userDtls.getPassword()) || userDtls.getPassword() == null)) {
         String password = userDtls.getPassword();
         user.setPassword(passwordEncoder.encode(password));
-        userService.saveUser(user);
       }
-
+      
+      userService.saveUser(user);
       return ResponseEntity.ok().body(new ResponseBean(OK.value(), OK.getReasonPhrase()).data("USER PROFILE UPDATE SUCCESSFULLY!"));
     } else {
       throw new FsdAuthenticationException("Username from token different from current Username!");
