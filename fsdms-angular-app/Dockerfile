@@ -2,6 +2,8 @@ FROM node as node-builder
 LABEL maintainer Jon Q
 WORKDIR /fsdms
 COPY . .
+RUN npm install -g nrm
+RUN nrm use npmMirror
 RUN npm install
 RUN npm run build
 
